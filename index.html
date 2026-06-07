@@ -8,7 +8,7 @@
 <style>
   :root { --black: #060606; --accent: #c8a96e; --white: #f0ece4; --muted: #8a8480; }
   body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; margin: 0; }
-  
+
   /* NAV & HERO */
   nav { padding: 2rem 5%; display: flex; justify-content: space-between; border-bottom: 1px solid #1a1a1a; }
   .logo { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.2rem; color: var(--accent); font-size: 1.2rem; }
@@ -16,14 +16,14 @@
   h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; margin: 0; }
   .gold { color: var(--accent); }
   .stroke { -webkit-text-stroke: 1px var(--accent); color: transparent; }
-  
+
   /* PROJECTS */
   #projects { padding: 80px 5%; }
   .project { margin-bottom: 100px; border: 1px solid #1a1a1a; padding: 2rem; }
   video { width: 100%; aspect-ratio: 16/9; background: #000; object-fit: cover; }
   .proj-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; margin-top: 1rem; color: var(--accent); }
   .proj-desc { color: var(--muted); margin-top: 0.5rem; max-width: 600px; }
-  
+
   /* GALLERY - Faster Loop */
   .gallery-section { padding: 4rem 0; border-top: 1px solid #1a1a1a; }
   .section-label { padding: 0 5% 2rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.2rem; color: var(--muted); }
@@ -34,7 +34,7 @@
   .row img:hover { border-color: var(--accent); transform: scale(1.05); }
 
   @keyframes loop { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  
+
   footer { padding: 40px 5%; border-top: 1px solid #1a1a1a; color: var(--muted); font-size: 0.8rem; }
 </style>
 </head>
@@ -42,6 +42,7 @@
 
 <nav>
   <div class="logo">BLENDER SHOWCASE</div>
+  <div style="color: var(--muted)">PORTFOLIO</div>
 </nav>
 
 <section id="hero">
@@ -55,7 +56,7 @@
     <p class="proj-desc">A complex simulation project featuring procedural fracture mechanics and dynamic particle systems to achieve a realistic magical portal effect.</p>
   </div>
   <div class="project">
-    <video controls><source src="vid2f.mp4" type="video/mp4"></video>
+    <video controls><source src="vid2.mp4" type="video/mp4"></video>
     <h3 class="proj-title">Knight in the Desert</h3>
     <p class="proj-desc">A character-driven short film utilizing advanced rigging, environment lighting, and cinematic camera work to tell a wordless story of transformation.</p>
   </div>
@@ -70,6 +71,8 @@
       <img src="AbandonedFoggyAlleyway.png"><img src="AnimeBedroomInterior.png"><img src="CrystalFictionalCave.png"><img src="DayForest.jpg"><img src="GenericLaptop.png"><img src="ProductBurberryPerfume.png"><img src="HouseInterior.png"><img src="RuralHumidMountains.png">
     </div>
     <div class="row reverse">
+      <img src="RustyVintageCar.png"><img src="UrbanPhotoRealisticStreet.png"><img src="ProductDoritosChips.png"><img src="SunkenThemePark.jpg"><img src="Fictional environment.png"><img src="SunflowerFieldMacro.png"><img src="TeenagerRoomInterior.png"><img src="BroOnCliff.jpg">
+      <img src="RustyVintageCar.png"><img src="UrbanPhotoRealisticStreet.png"><img src="ProductDoritosChips.png"><img src="SunkenThemePark.jpg"><img src="Fictional environment.png"><img src="SunflowerFieldMacro.png"><img src="TeenagerRoomInterior.png"><img src="BroOnCliff.jpg">
       <img src="RustyVintageCar.png"><img src="UrbanPhotoRealisticStreet.png"><img src="ProductDoritosChips.png"><img src="SunkenThemePark.jpg"><img src="SunflowerFieldMacro.png"><img src="TeenagerRoomInterior.png"><img src="BroOnCliff.jpg">
       <img src="RustyVintageCar.png"><img src="UrbanPhotoRealisticStreet.png"><img src="ProductDoritosChips.png"><img src="SunkenThemePark.jpg"><img src="SunflowerFieldMacro.png"><img src="TeenagerRoomInterior.png"><img src="BroOnCliff.jpg">
     </div>
@@ -81,4 +84,3 @@
 </footer>
 
 </body>
-</html>
