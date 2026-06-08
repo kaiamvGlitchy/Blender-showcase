@@ -1,86 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Blender Showcase</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
-<style>
-  :root { --black: #060606; --accent: #c8a96e; --white: #f0ece4; --muted: #8a8480; }
-  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; margin: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blender Showcase | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --black: #060606;
+      --accent: #c8a96e;
+      --white: #f0ece4;
+      --muted: #8a8480;
+    }
 
-  /* NAV & HERO */
-  nav { padding: 2rem 5%; display: flex; justify-content: space-between; border-bottom: 1px solid #1a1a1a; }
-  .logo { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.2rem; color: var(--accent); font-size: 1.2rem; }
-  #hero { padding: 120px 5%; max-width: 900px; }
-  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; margin: 0; }
-  .gold { color: var(--accent); }
-  .stroke { -webkit-text-stroke: 1px var(--accent); color: transparent; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+    }
 
-  /* PROJECTS */
-  #projects { padding: 80px 5%; }
-  .project { margin-bottom: 100px; border: 1px solid #1a1a1a; padding: 2rem; }
-  video { width: 100%; aspect-ratio: 16/9; background: #000; object-fit: cover; }
-  .proj-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; margin-top: 1rem; color: var(--accent); }
-  .proj-desc { color: var(--muted); margin-top: 0.5rem; max-width: 600px; }
+    /* NAV & HERO */
+    nav {
+      padding: 3rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-  /* GALLERY - Faster Loop */
-  .gallery-section { padding: 4rem 0; border-top: 1px solid #1a1a1a; }
-  .section-label { padding: 0 5% 2rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.2rem; color: var(--muted); }
-  .gallery-wrap { overflow: hidden; }
-  .row { display: flex; gap: 20px; margin-bottom: 20px; animation: loop 15s linear infinite; width: max-content; }
-  .row.reverse { animation-direction: reverse; }
-  .row img { height: 180px; width: auto; border: 1px solid #1a1a1a; transition: 0.3s; cursor: pointer; }
-  .row img:hover { border-color: var(--accent); transform: scale(1.05); }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.3rem;
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
 
-  @keyframes loop { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    #hero {
+      padding: 100px 5%;
+      max-width: 1000px;
+    }
 
-  footer { padding: 40px 5%; border-top: 1px solid #1a1a1a; color: var(--muted); font-size: 0.8rem; }
-</style>
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 12vw, 10rem);
+      line-height: 0.9;
+      margin: 0;
+    }
+
+    .gold {
+      color: var(--accent);
+    }
+
+    .stroke {
+      -webkit-text-stroke: 1px var(--accent);
+      color: transparent;
+    }
+
+    /* PROJECTS */
+    #projects {
+      padding: 0 5% 100px;
+    }
+
+    .project {
+      margin-bottom: 120px;
+    }
+
+    video {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #111;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .proj-info {
+      margin-top: 2rem;
+    }
+
+    .proj-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--accent);
+      letter-spacing: 0.1rem;
+    }
+
+    .proj-desc {
+      color: var(--muted);
+      margin-top: 0.5rem;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    /* GALLERY */
+    .gallery-section {
+      padding: 100px 0;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .section-label {
+      padding: 0 5% 3rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      letter-spacing: 0.2rem;
+    }
+
+    .gallery-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .row {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+      animation: loop 8s linear infinite;
+      width: max-content;
+    }
+
+    .row img {
+      height: 220px;
+      width: auto;
+      opacity: 0.8;
+      transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .row img:hover {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    @keyframes loop {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* NEXT SECTION */
+    .next-section {
+      padding: 100px 5%;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer {
+      padding: 50px 5%;
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+    }
+  </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="logo">BLENDER SHOWCASE</div>
-  <div style="color: var(--muted)">PORTFOLIO</div>
-</nav>
+  <nav>
+    <div class="logo">BLENDER SHOWCASE</div>
+  </nav>
 
-<section id="hero">
-  <h1><span class="stroke">BLENDER</span><br><span class="gold">SHOWCASE</span></h1>
-</section>
+  <section id="hero">
+    <h1><span class="stroke">BLENDER</span><br><span class="gold">SHOWCASE</span></h1>
+  </section>
 
-<section id="projects">
-  <div class="project">
-    <video controls><source src="vid1.mp4" type="video/mp4"></video>
-    <h3 class="proj-title">Portal VFX Animation</h3>
-    <p class="proj-desc">A complex simulation project featuring procedural fracture mechanics and dynamic particle systems to achieve a realistic magical portal effect.</p>
-  </div>
-  <div class="project">
-    <video controls><source src="vid2.mp4" type="video/mp4"></video>
-    <h3 class="proj-title">Knight in the Desert</h3>
-    <p class="proj-desc">A character-driven short film utilizing advanced rigging, environment lighting, and cinematic camera work to tell a wordless story of transformation.</p>
-  </div>
-</section>
-
-<!-- Looping Gallery -->
-<section class="gallery-section">
-  <div class="section-label">PAST PROJECTS</div>
-  <div class="gallery-wrap">
-    <div class="row">
-      <img src="AbandonedFoggyAlleyway.png"><img src="AnimeBedroomInterior.png"><img src="CrystalFictionalCave.png"><img src="DayForest.jpg"><img src="GenericLaptop.png"><img src="ProductBurberryPerfume.png"><img src="HouseInterior.png"><img src="RuralHumidMountains.png">
-      <img src="AbandonedFoggyAlleyway.png"><img src="AnimeBedroomInterior.png"><img src="CrystalFictionalCave.png"><img src="DayForest.jpg"><img src="GenericLaptop.png"><img src="ProductBurberryPerfume.png"><img src="HouseInterior.png"><img src="RuralHumidMountains.png">
+  <section id="projects">
+    <div class="project">
+      <video controls>
+        <source src="vid1.mp4" type="video/mp4">
+      </video>
+      <div class="proj-info">
+        <h3 class="proj-title">Portal VFX Animation</h3>
+        <p class="proj-desc">Complex procedural fracture mechanics combined with dynamic particle systems for a
+          cinematic magical effect.</p>
+      </div>
     </div>
-    <div class="row reverse">
-      <img src="RustyVintageCar.png"><img src="UrbanPhotoRealisticStreet.png"><img src="ProductDoritosChips.png"><img src="SunkenThemePark.jpg"><img src="Fictional environment.png"><img src="SunflowerFieldMacro.png"><img src="TeenagerRoomInterior.png"><img src="BroOnCliff.jpg">
-      <img src="RustyVintageCar.png"><img src="UrbanPhotoRealisticStreet.png"><img src="ProductDoritosChips.png"><img src="SunkenThemePark.jpg"><img src="Fictional environment.png"><img src="SunflowerFieldMacro.png"><img src="TeenagerRoomInterior.png"><img src="BroOnCliff.jpg">
-      <img src="RustyVintageCar.png"><img src="UrbanPhotoRealisticStreet.png"><img src="ProductDoritosChips.png"><img src="SunkenThemePark.jpg"><img src="SunflowerFieldMacro.png"><img src="TeenagerRoomInterior.png"><img src="BroOnCliff.jpg">
-      <img src="RustyVintageCar.png"><img src="UrbanPhotoRealisticStreet.png"><img src="ProductDoritosChips.png"><img src="SunkenThemePark.jpg"><img src="SunflowerFieldMacro.png"><img src="TeenagerRoomInterior.png"><img src="BroOnCliff.jpg">
+    <div class="project">
+      <video controls>
+        <source src="vid2.mp4" type="video/mp4">
+      </video>
+      <div class="proj-info">
+        <h3 class="proj-title">Knight in the Desert</h3>
+        <p class="proj-desc">Character-driven storytelling focused on environment lighting and advanced rigging.</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  &copy; 2026 BLENDER SHOWCASE • DESIGNED BY HASSNAIN
-</footer>
+  <section class="gallery-section">
+    <div class="section-label">GALLERY</div>
+    <div class="gallery-wrap">
+      <div class="row">
+        <img src="AbandonedFoggyAlleyway.png"><img src="AnimeBedroomInterior.png"><img src="BroOnCliff.jpg"><img
+          src="broshim.jpg"><img src="CrystalFictionalCave.png"><img src="DayGamingSetupMinimal.png"><img
+          src="HouseInterior.png">
+        <img src="AbandonedFoggyAlleyway.png"><img src="AnimeBedroomInterior.png"><img src="BroOnCliff.jpg"><img
+          src="broshim.jpg"><img src="CrystalFictionalCave.png"><img src="DayGamingSetupMinimal.png"><img
+          src="HouseInterior.png">
+      </div>
+      <div class="row" style="animation-direction: reverse;">
+        <img src="MacroGrassShot.png"><img src="ProductBurberryPerfume.png"><img src="RuralHumidMountains.png"><img
+          src="RustyVintageCar.png"><img src="SunflowerFieldMacro.png"><img src="SunkenThemePark.jpg"><img
+          src="TeenagerRoomInterior.png"><img src="UrbanPhotoRealisticStreet.png">
+        <img src="MacroGrassShot.png"><img src="ProductBurberryPerfume.png"><img src="RuralHumidMountains.png"><img
+          src="RustyVintageCar.png"><img src="SunflowerFieldMacro.png"><img src="SunkenThemePark.jpg"><img
+          src="TeenagerRoomInterior.png"><img src="UrbanPhotoRealisticStreet.png">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 BLENDER SHOWCASE • CREATED BY HASSNAIN
+  </footer>
 
 </body>
+
+</html>
