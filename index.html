@@ -1,223 +1,638 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blender Showcase | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400&display=swap"
-    rel="stylesheet" />
+  <title>Blender Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --black: #060606;
-      --accent: #c8a96e;
-      --white: #f0ece4;
-      --muted: #8a8480;
+      --bg: #ffffff;
+      --bg2: #f5f5f7;
+      --text: #1d1d1f;
+      --muted: #86868b;
+      --border: rgba(0,0,0,0.08);
+      --accent: #1d1d1f;
+      --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --bg2: #111111;
+        --text: #f5f5f7;
+        --muted: #6e6e73;
+        --border: rgba(255,255,255,0.08);
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Inter', sans-serif;
-      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* NAV & HERO */
+    /* ── Nav ───────────────────────────────── */
     nav {
-      padding: 3rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 40px;
+      height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 0.5px solid var(--border);
+      transition: background 0.3s var(--ease);
+    }
+    @media (prefers-color-scheme: dark) {
+      nav { background: rgba(0,0,0,0.72); }
     }
 
-    .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 0.3rem;
-      color: var(--accent);
-      font-size: 1.5rem;
+    .nav-logo {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--text);
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ──────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      padding: 80px 40px 60px;
     }
 
-    #hero {
-      padding: 100px 5%;
-      max-width: 1000px;
+    .hero-eyebrow {
+      font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 24px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.8s var(--ease) 0.2s forwards;
     }
 
-    h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 12vw, 10rem);
-      line-height: 0.9;
-      margin: 0;
+    .hero-title {
+      font-size: clamp(64px, 10vw, 120px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--text);
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.9s var(--ease) 0.35s forwards;
     }
 
-    .gold {
-      color: var(--accent);
+    .hero-title span {
+      display: block;
+      background: linear-gradient(135deg, var(--text) 0%, var(--muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .stroke {
-      -webkit-text-stroke: 1px var(--accent);
-      color: transparent;
+    .hero-sub {
+      margin-top: 28px;
+      font-size: 20px; font-weight: 400; color: var(--muted);
+      max-width: 480px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.9s var(--ease) 0.5s forwards;
     }
 
-    /* PROJECTS */
-    #projects {
-      padding: 0 5% 100px;
+    .hero-cta {
+      margin-top: 44px;
+      display: flex; gap: 12px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.9s var(--ease) 0.65s forwards;
     }
+
+    .btn {
+      padding: 12px 24px; border-radius: 980px;
+      font-size: 14px; font-weight: 500; text-decoration: none;
+      transition: all 0.2s var(--ease);
+      cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--text); color: var(--bg);
+    }
+    .btn-primary:hover { opacity: 0.82; transform: scale(1.02); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 0.5px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--bg2); }
+
+    .scroll-hint {
+      position: absolute; bottom: 36px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fadeIn 1s var(--ease) 1.2s forwards;
+    }
+    .scroll-hint span { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .scroll-line {
+      width: 1px; height: 40px; background: var(--border);
+      position: relative; overflow: hidden;
+    }
+    .scroll-line::after {
+      content: ''; position: absolute; top: -40px; left: 0;
+      width: 1px; height: 40px;
+      background: var(--muted);
+      animation: scrollDown 1.8s var(--ease) 1.2s infinite;
+    }
+
+    /* ── Section wrapper ───────────────────── */
+    .section { padding: 120px 40px; max-width: 1040px; margin: 0 auto; }
+    .section-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 48px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 0.5px; background: var(--border);
+    }
+
+    /* ── Projects ──────────────────────────── */
+    .projects { padding: 80px 40px 120px; max-width: 1040px; margin: 0 auto; }
 
     .project {
-      margin-bottom: 120px;
+      margin-bottom: 100px;
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
     }
+    .project.visible { opacity: 1; transform: translateY(0); }
 
-    video {
-      width: 100%;
+    .video-wrap {
+      position: relative; border-radius: 20px;
+      overflow: hidden; background: var(--bg2);
       aspect-ratio: 16/9;
-      background: #111;
-      display: block;
-      border-radius: 4px;
+    }
+    .video-wrap::before {
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      border-radius: 20px;
+      box-shadow: inset 0 0 0 0.5px var(--border);
+      pointer-events: none;
+    }
+    video {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; border-radius: 20px;
     }
 
-    .proj-info {
-      margin-top: 2rem;
-    }
-
-    .proj-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      color: var(--accent);
-      letter-spacing: 0.1rem;
-    }
-
-    .proj-desc {
-      color: var(--muted);
-      margin-top: 0.5rem;
-      max-width: 500px;
-      line-height: 1.6;
-    }
-
-    /* GALLERY */
-    .gallery-section {
-      padding: 100px 0;
-      border-top: 1px solid #1a1a1a;
-    }
-
-    .section-label {
-      padding: 0 5% 3rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      color: var(--white);
-      letter-spacing: 0.2rem;
-    }
-
-    .gallery-wrap {
-      overflow: hidden;
-      position: relative;
-    }
-
-    .row {
-      display: flex;
-      gap: 30px;
-      margin-bottom: 30px;
-      animation: loop 8s linear infinite;
-      width: max-content;
-    }
-
-    .row img {
-      height: 220px;
-      width: auto;
-      opacity: 0.8;
-      transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    .play-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.15);
+      opacity: 1; transition: opacity 0.3s;
       cursor: pointer;
     }
+    .play-overlay.hidden { opacity: 0; pointer-events: none; }
+    .play-btn {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s var(--ease), background 0.2s;
+    }
+    .play-btn:hover { transform: scale(1.08); background: white; }
+    .play-btn svg { width: 28px; height: 28px; margin-left: 4px; }
 
-    .row img:hover {
-      opacity: 1;
-      transform: scale(1.05);
+    .proj-meta {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-top: 24px;
+    }
+    .proj-title { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+    .proj-tag {
+      font-size: 12px; font-weight: 500;
+      background: var(--bg2); color: var(--muted);
+      padding: 6px 14px; border-radius: 980px;
+      border: 0.5px solid var(--border);
     }
 
-    @keyframes loop {
-      from {
-        transform: translateX(0);
-      }
+    /* ── Gallery ───────────────────────────── */
+    .gallery-section { padding: 0; overflow: hidden; }
+    .gallery {
+      padding: 80px 0;
+      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+    .gallery-row { display: flex; gap: 16px; width: max-content; margin-bottom: 16px; }
+    .r1 { animation: scrollLeft 30s linear infinite; }
+    .r2 { animation: scrollRight 30s linear infinite; }
+    .gallery-row img {
+      height: 220px; border-radius: 14px; object-fit: cover;
+      display: block;
+      transition: transform 0.4s var(--ease), filter 0.4s;
+      filter: brightness(0.96);
+    }
+    .gallery-row img:hover { transform: scale(1.03); filter: brightness(1); }
 
-      to {
-        transform: translateX(-50%);
-      }
+    /* ── Stats strip ───────────────────────── */
+    .stats {
+      padding: 80px 40px;
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      display: flex; justify-content: center; gap: 0;
+      max-width: 1040px; margin: 0 auto;
+    }
+    .stat {
+      flex: 1; text-align: center; padding: 0 40px;
+      border-right: 0.5px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-size: 48px; font-weight: 700; letter-spacing: -0.04em;
+      color: var(--text);
+    }
+    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* ── Timeline ──────────────────────────── */
+    .timeline-outer {
+      padding: 120px 40px;
+      max-width: 1040px; margin: 0 auto;
     }
 
-    /* NEXT SECTION */
-    .next-section {
-      padding: 100px 5%;
-      border-top: 1px solid #1a1a1a;
+    .timeline-scroll-container {
+      position: relative;
+      height: 500vh;
     }
 
+    .timeline-sticky {
+      position: sticky; top: 0;
+      height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .timeline-inner {
+      display: flex; align-items: center; gap: 80px;
+      width: 100%; max-width: 900px;
+    }
+
+    .path-container { position: relative; flex-shrink: 0; }
+    .svg-path { height: 520px; width: 160px; }
+    .path-bg { fill: none; stroke: var(--border); stroke-width: 3; stroke-linecap: round; }
+    .path-fill { fill: none; stroke: var(--text); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset 0.04s linear; }
+    .timeline-dot {
+      r: 6; fill: var(--bg);
+      stroke: var(--text); stroke-width: 2.5;
+      transition: r 0.2s var(--ease);
+    }
+
+    .timeline-content { flex: 1; }
+    .stage-display { position: relative; }
+
+    .stage-item {
+      position: absolute; top: 0; left: 0;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+      pointer-events: none;
+    }
+    .stage-item.active {
+      opacity: 1; transform: translateY(0);
+      position: relative; pointer-events: auto;
+    }
+
+    .stage-num {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+    .stage-name {
+      font-size: 56px; font-weight: 700; letter-spacing: -0.03em;
+      line-height: 1; color: var(--text); margin-bottom: 20px;
+    }
+    .stage-desc {
+      font-size: 17px; color: var(--muted); line-height: 1.6;
+      max-width: 420px;
+    }
+    .stage-progress-bar {
+      margin-top: 32px; height: 2px; background: var(--border);
+      border-radius: 1px; overflow: hidden; max-width: 300px;
+    }
+    .stage-progress-fill {
+      height: 100%; background: var(--text); border-radius: 1px;
+      transition: width 0.6s var(--ease);
+    }
+
+    /* ── Skills chips ──────────────────────── */
+    .skills-wrap { padding: 80px 40px; max-width: 1040px; margin: 0 auto; }
+    .chips {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .chip {
+      padding: 10px 18px; border-radius: 980px;
+      border: 0.5px solid var(--border);
+      font-size: 14px; color: var(--muted);
+      background: var(--bg);
+      transition: all 0.2s var(--ease);
+      cursor: default;
+    }
+    .chip:hover { color: var(--text); border-color: var(--text); background: var(--bg2); }
+
+    /* ── About / CTA ───────────────────────── */
+    .about {
+      padding: 120px 40px; text-align: center;
+      max-width: 700px; margin: 0 auto;
+    }
+    .about-headline {
+      font-size: clamp(36px, 5vw, 56px); font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px;
+    }
+    .about-body { font-size: 18px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; }
+
+    /* ── Footer ────────────────────────────── */
     footer {
-      padding: 50px 5%;
-      color: var(--muted);
-      font-size: 0.7rem;
-      letter-spacing: 0.1rem;
-      text-transform: uppercase;
+      padding: 60px 40px;
+      border-top: 0.5px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+
+    /* ── Animations ────────────────────────── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes scrollLeft {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes scrollRight {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
+    }
+    @keyframes scrollDown {
+      0%   { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(80px); opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+    @media (max-width: 680px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero-title { font-size: 52px; }
+      .section, .projects, .skills-wrap, .timeline-outer, .about { padding-left: 20px; padding-right: 20px; }
+      .stats { flex-direction: column; gap: 40px; }
+      .stat { border-right: none; border-bottom: 0.5px solid var(--border); padding-bottom: 40px; }
+      .stat:last-child { border-bottom: none; }
+      .timeline-inner { flex-direction: column; }
+      .stage-name { font-size: 40px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
 </head>
-
 <body>
 
+  <!-- Nav -->
   <nav>
-    <div class="logo">BLENDER SHOWCASE</div>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+    </nav>
   </nav>
 
-  <section id="hero">
-    <h1><span class="stroke">BLENDER</span><br><span class="gold">SHOWCASE</span></h1>
+  <!-- Hero -->
+  <section class="hero" style="position:relative;">
+    <p class="hero-eyebrow">3D stuff</p>
+    <h1 class="hero-title">
+      <span>Blender</span>
+      <span>Showcase</span>
+    </h1>
+    <p class="hero-sub">Stuff i made</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn btn-primary">View work</a>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
   </section>
 
-  <section id="projects">
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" data-count="2">0</div>
+      <div class="stat-label">Projects</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-count="1700">0</div>
+      <div class="stat-label">Hours of work</div>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div id="work" class="projects">
+    <div class="section-label">tuff work</div>
+
     <div class="project">
-      <video controls>
-        <source src="vid1.mp4" type="video/mp4">
-      </video>
-      <div class="proj-info">
-        <h3 class="proj-title">Portal VFX Animation</h3>
-        <p class="proj-desc">Complex procedural fracture mechanics combined with dynamic particle systems for a
-          cinematic magical effect.</p>
+      <div class="video-wrap">
+        <div class="play-overlay" data-video="v1">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24" fill="var(--text)"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <video id="v1" preload="none" poster="">
+          <source src="vid1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="proj-meta">
+        <div>
+          <div class="proj-title">Portal VFX Animation</div>
+          </div>
+        <span class="proj-tag">VFX</span>
       </div>
     </div>
+
     <div class="project">
-      <video controls>
-        <source src="vid2.mp4" type="video/mp4">
-      </video>
-      <div class="proj-info">
-        <h3 class="proj-title">Knight in the Desert</h3>
-        <p class="proj-desc">Character-driven storytelling focused on environment lighting and advanced rigging.</p>
+      <div class="video-wrap">
+        <div class="play-overlay" data-video="v2">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24" fill="var(--text)"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <video id="v2" preload="none" poster="">
+          <source src="vid2.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="proj-meta">
+        <div>
+          <div class="proj-title">Knight in the Desert</div></p>
+        </div>
+        <span class="proj-tag">Character</span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="gallery-section">
-    <div class="section-label">GALLERY</div>
-    <div class="gallery-wrap">
-      <div class="row">
-        <img src="AbandonedFoggyAlleyway.png"><img src="AnimeBedroomInterior.png"><img src="BroOnCliff.jpg"><img
-          src="broshim.jpg"><img src="CrystalFictionalCave.png"><img src="DayGamingSetupMinimal.png"><img
-          src="HouseInterior.png">
-        <img src="AbandonedFoggyAlleyway.png"><img src="AnimeBedroomInterior.png"><img src="BroOnCliff.jpg"><img
-          src="broshim.jpg"><img src="CrystalFictionalCave.png"><img src="DayGamingSetupMinimal.png"><img
-          src="HouseInterior.png">
+  <!-- Gallery -->
+  <div class="gallery-section">
+    <div class="section-label" style="padding: 0 40px; max-width:1040px; margin:0 auto;">Random stuff i made🥀</div>
+    <div class="gallery">
+      <div class="gallery-row r1">
+        <img src="AbandonedFoggyAlleyway.png" alt="Abandoned foggy alleyway">
+        <img src="AnimeBedroomInterior.png" alt="Anime bedroom interior">
+        <img src="BroOnCliff.jpg" alt="Figure on cliff">
+        <img src="broshim.jpg" alt="3D render">
+        <img src="CrystalFictionalCave.png" alt="Crystal cave">
+        <img src="AbandonedFoggyAlleyway.png" alt="">
+        <img src="AnimeBedroomInterior.png" alt="">
+        <img src="BroOnCliff.jpg" alt="">
+        <img src="broshim.jpg" alt="">
+        <img src="CrystalFictionalCave.png" alt="">
       </div>
-      <div class="row" style="animation-direction: reverse;">
-        <img src="MacroGrassShot.png"><img src="ProductBurberryPerfume.png"><img src="RuralHumidMountains.png"><img
-          src="RustyVintageCar.png"><img src="SunflowerFieldMacro.png"><img src="SunkenThemePark.jpg"><img
-          src="TeenagerRoomInterior.png"><img src="UrbanPhotoRealisticStreet.png">
-        <img src="MacroGrassShot.png"><img src="ProductBurberryPerfume.png"><img src="RuralHumidMountains.png"><img
-          src="RustyVintageCar.png"><img src="SunflowerFieldMacro.png"><img src="SunkenThemePark.jpg"><img
-          src="TeenagerRoomInterior.png"><img src="UrbanPhotoRealisticStreet.png">
+      <div class="gallery-row r2">
+        <img src="DayGamingSetupMinimal.png" alt="Minimal gaming setup">
+        <img src="HouseInterior.png" alt="House interior">
+        <img src="MacroGrassShot.png" alt="Macro grass">
+        <img src="ProductBurberryPerfume.png" alt="Product render">
+        <img src="RuralHumidMountains.png" alt="Rural mountains">
+        <img src="DayGamingSetupMinimal.png" alt="">
+        <img src="HouseInterior.png" alt="">
+        <img src="MacroGrassShot.png" alt="">
+        <img src="ProductBurberryPerfume.png" alt="">
+        <img src="RuralHumidMountains.png" alt="">
       </div>
     </div>
-  </section>
+  </div>
 
+<div id="process" class="timeline-outer">
+  <div class="section-label">The process</div>
+  <div class="timeline-scroll-container" id="tl-container">
+    <div class="timeline-sticky">
+      <div class="timeline-inner">
+        <div class="path-container">
+          <svg class="svg-path" viewBox="0 0 80 520" preserveAspectRatio="xMidYMid meet">
+            <path class="path-bg" d="M40 0 C40 80 10 120 40 180 C70 240 10 300 40 360 C70 420 40 480 40 520"/>
+            <path id="tl-progress" class="path-fill" d="M40 0 C40 80 10 120 40 180 C70 240 10 300 40 360 C70 420 40 480 40 520"/>
+            <circle id="tl-dot" class="timeline-dot" cx="40" cy="0"/>
+          </svg>
+        </div>
+        <div class="timeline-content">
+          <div class="stage-display" style="min-height: 220px;">
+            <div class="stage-item active" data-stage="0">
+              <div class="stage-num">01 — Concept</div>
+              <div class="stage-name">Idea</div>
+              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:20%"></div></div>
+            </div>
+            <div class="stage-item" data-stage="1">
+              <div class="stage-num">02 — Blockout</div>
+              <div class="stage-name">Form</div>
+              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:40%"></div></div>
+            </div>
+            <div class="stage-item" data-stage="2">
+              <div class="stage-num">03 — Modeling</div>
+              <div class="stage-name">Structure</div>
+              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:60%"></div></div>
+            </div>
+            <div class="stage-item" data-stage="3">
+              <div class="stage-num">04 — Texturing</div>
+              <div class="stage-name">Surface</div>
+              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:80%"></div></div>
+            </div>
+            <div class="stage-item" data-stage="4">
+              <div class="stage-num">05 — Render</div>
+              <div class="stage-name">Final</div>
+              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Footer -->
   <footer>
-    &copy; 2026 BLENDER SHOWCASE • CREATED BY HASSNAIN
+    <div class="footer-logo">Website Built By Hassnain</div>
+    <div class="footer-copy">&copy; 2026 — Blender Showcase</div>
   </footer>
 
-</body>
+  <script>
+    /* ── Play overlay ──────────────────────── */
+    document.querySelectorAll('.play-overlay').forEach(overlay => {
+      overlay.addEventListener('click', () => {
+        const vid = document.getElementById(overlay.dataset.video);
+        overlay.classList.add('hidden');
+        vid.setAttribute('controls', '');
+        vid.play().catch(() => {});
+      });
+    });
 
+    /* ── Scroll-reveal for projects ────────── */
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.project').forEach(el => revealObs.observe(el));
+
+    /* ── Stat counter animation ────────────── */
+    function animateCount(el, target) {
+      const dur = 1400; const start = performance.now();
+      const suffix = el.dataset.suffix || '';
+      requestAnimationFrame(function tick(now) {
+        const t = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+      });
+    }
+    const statsObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('[data-count]').forEach(el => {
+            animateCount(el, parseInt(el.dataset.count));
+          });
+          statsObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    const statsEl = document.querySelector('.stats');
+    if (statsEl) statsObs.observe(statsEl);
+
+    /* ── Timeline scroll ───────────────────── */
+    const tlProgress = document.getElementById('tl-progress');
+    const tlDot = document.getElementById('tl-dot');
+    const tlContainer = document.getElementById('tl-container');
+    const stages = document.querySelectorAll('.stage-item');
+
+    if (tlProgress && tlContainer) {
+      const pathLen = tlProgress.getTotalLength();
+      tlProgress.style.strokeDasharray = pathLen;
+      tlProgress.style.strokeDashoffset = pathLen;
+
+      function updateTimeline() {
+        const rect = tlContainer.getBoundingClientRect();
+        const totalScroll = tlContainer.offsetHeight - window.innerHeight;
+        const scrolled = -rect.top;
+        const pct = Math.max(0, Math.min(1, scrolled / totalScroll));
+
+        const draw = pct * pathLen;
+        tlProgress.style.strokeDashoffset = pathLen - draw;
+
+        const point = tlProgress.getPointAtLength(draw);
+        tlDot.setAttribute('cx', point.x);
+        tlDot.setAttribute('cy', point.y);
+
+        const stageIdx = Math.min(Math.floor(pct * 5), 4);
+        stages.forEach((s, i) => s.classList.toggle('active', i === stageIdx));
+      }
+
+      window.addEventListener('scroll', updateTimeline, { passive: true });
+      updateTimeline();
+    }
+  </script>
+</body>
 </html>
