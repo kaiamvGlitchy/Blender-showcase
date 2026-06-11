@@ -41,12 +41,49 @@
       overflow-x: hidden;
     }
 
+    /* ── Preloader ────────────────────────── */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    }
+    .loader-content {
+      text-align: center; width: 100%; max-width: 240px;
+    }
+    .loader-title {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 20px; color: var(--text);
+    }
+    .loader-track {
+      height: 2px; width: 100%; background: var(--border);
+      border-radius: 10px; overflow: hidden; position: relative;
+    }
+    .loader-bar {
+      height: 100%; width: 0%; background: var(--text);
+      border-radius: 10px; transition: width 0.1s ease-out;
+    }
+    .loader-percentage {
+      font-size: 11px; font-weight: 500; color: var(--muted);
+      margin-top: 10px; font-variant-numeric: tabular-nums;
+    }
+
+    /* Hide content wrapper during loading screen */
+    #app-content {
+      opacity: 0;
+      transition: opacity 0.8s var(--ease);
+    }
+    body.loaded #app-content {
+      opacity: 1;
+    }
+
     /* ── Nav ───────────────────────────────── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 0 40px;
       height: 52px;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: flex-end;
       background: rgba(255,255,255,0.72);
       backdrop-filter: saturate(180%) blur(20px);
       -webkit-backdrop-filter: saturate(180%) blur(20px);
@@ -55,11 +92,6 @@
     }
     @media (prefers-color-scheme: dark) {
       nav { background: rgba(0,0,0,0.72); }
-    }
-
-    .nav-logo {
-      font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--text);
     }
     .nav-links { display: flex; gap: 28px; }
     .nav-links a {
@@ -81,8 +113,8 @@
       text-transform: uppercase; color: var(--muted);
       margin-bottom: 24px;
       opacity: 0; transform: translateY(12px);
-      animation: fadeUp 0.8s var(--ease) 0.2s forwards;
     }
+    body.loaded .hero-eyebrow { animation: fadeUp 0.8s var(--ease) 0.2s forwards; }
 
     .hero-title {
       font-size: clamp(64px, 10vw, 120px);
@@ -91,8 +123,8 @@
       line-height: 0.95;
       color: var(--text);
       opacity: 0; transform: translateY(20px);
-      animation: fadeUp 0.9s var(--ease) 0.35s forwards;
     }
+    body.loaded .hero-title { animation: fadeUp 0.9s var(--ease) 0.35s forwards; }
 
     .hero-title span {
       display: block;
@@ -107,15 +139,15 @@
       font-size: 20px; font-weight: 400; color: var(--muted);
       max-width: 480px;
       opacity: 0; transform: translateY(12px);
-      animation: fadeUp 0.9s var(--ease) 0.5s forwards;
     }
+    body.loaded .hero-sub { animation: fadeUp 0.9s var(--ease) 0.5s forwards; }
 
     .hero-cta {
       margin-top: 44px;
       display: flex; gap: 12px;
       opacity: 0; transform: translateY(12px);
-      animation: fadeUp 0.9s var(--ease) 0.65s forwards;
     }
+    body.loaded .hero-cta { animation: fadeUp 0.9s var(--ease) 0.65s forwards; }
 
     .btn {
       padding: 12px 24px; border-radius: 980px;
@@ -127,17 +159,13 @@
       background: var(--text); color: var(--bg);
     }
     .btn-primary:hover { opacity: 0.82; transform: scale(1.02); }
-    .btn-ghost {
-      background: transparent; color: var(--text);
-      border: 0.5px solid var(--border);
-    }
-    .btn-ghost:hover { background: var(--bg2); }
 
     .scroll-hint {
       position: absolute; bottom: 36px;
       display: flex; flex-direction: column; align-items: center; gap: 8px;
-      opacity: 0; animation: fadeIn 1s var(--ease) 1.2s forwards;
+      opacity: 0;
     }
+    body.loaded .scroll-hint { animation: fadeIn 1s var(--ease) 1.2s forwards; }
     .scroll-hint span { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
     .scroll-line {
       width: 1px; height: 40px; background: var(--border);
@@ -310,10 +338,6 @@
       font-size: 56px; font-weight: 700; letter-spacing: -0.03em;
       line-height: 1; color: var(--text); margin-bottom: 20px;
     }
-    .stage-desc {
-      font-size: 17px; color: var(--muted); line-height: 1.6;
-      max-width: 420px;
-    }
     .stage-progress-bar {
       margin-top: 32px; height: 2px; background: var(--border);
       border-radius: 1px; overflow: hidden; max-width: 300px;
@@ -322,32 +346,6 @@
       height: 100%; background: var(--text); border-radius: 1px;
       transition: width 0.6s var(--ease);
     }
-
-    /* ── Skills chips ──────────────────────── */
-    .skills-wrap { padding: 80px 40px; max-width: 1040px; margin: 0 auto; }
-    .chips {
-      display: flex; flex-wrap: wrap; gap: 10px;
-    }
-    .chip {
-      padding: 10px 18px; border-radius: 980px;
-      border: 0.5px solid var(--border);
-      font-size: 14px; color: var(--muted);
-      background: var(--bg);
-      transition: all 0.2s var(--ease);
-      cursor: default;
-    }
-    .chip:hover { color: var(--text); border-color: var(--text); background: var(--bg2); }
-
-    /* ── About / CTA ───────────────────────── */
-    .about {
-      padding: 120px 40px; text-align: center;
-      max-width: 700px; margin: 0 auto;
-    }
-    .about-headline {
-      font-size: clamp(36px, 5vw, 56px); font-weight: 700;
-      letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px;
-    }
-    .about-body { font-size: 18px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; }
 
     /* ── Footer ────────────────────────────── */
     footer {
@@ -385,7 +383,7 @@
       nav { padding: 0 20px; }
       .nav-links { display: none; }
       .hero-title { font-size: 52px; }
-      .section, .projects, .skills-wrap, .timeline-outer, .about { padding-left: 20px; padding-right: 20px; }
+      .projects, .skills-wrap, .timeline-outer { padding-left: 20px; padding-right: 20px; }
       .stats { flex-direction: column; gap: 40px; }
       .stat { border-right: none; border-bottom: 0.5px solid var(--border); padding-bottom: 40px; }
       .stat:last-child { border-bottom: none; }
@@ -397,241 +395,329 @@
 </head>
 <body>
 
-  <!-- Nav -->
-  <nav>
-    <nav class="nav-links">
-      <a href="#work">Work</a>
-      <a href="#process">Process</a>
-      <a href="#about">About</a>
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-title">Loading Assets</div>
+      <div class="loader-track">
+        <div id="loader-bar" class="loader-bar"></div>
+      </div>
+      <div id="loader-text" class="loader-percentage">0%</div>
+    </div>
+  </div>
+
+  <div id="app-content">
+    <nav>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+      </div>
     </nav>
-  </nav>
 
-  <!-- Hero -->
-  <section class="hero" style="position:relative;">
-    <p class="hero-eyebrow">3D stuff</p>
-    <h1 class="hero-title">
-      <span>Blender</span>
-      <span>Showcase</span>
-    </h1>
-    <p class="hero-sub">Stuff i made</p>
-    <div class="hero-cta">
-      <a href="#work" class="btn btn-primary">View work</a>
-    </div>
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
+    <section class="hero" style="position:relative;">
+      <p class="hero-eyebrow">3D stuff</p>
+      <h1 class="hero-title">
+        <span>Blender</span>
+        <span>Showcase</span>
+      </h1>
+      <p class="hero-sub">Stuff i made</p>
+      <div class="hero-cta">
+        <a href="#work" class="btn btn-primary">View work</a>
+      </div>
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num" data-count="2">0</div>
-      <div class="stat-label">Projects</div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num" data-count="2">0</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-count="700">0</div>
+        <div class="stat-label">Hours of work</div>
+      </div>
     </div>
-    <div class="stat">
-      <div class="stat-num" data-count="700">0</div>
-      <div class="stat-label">Hours of work</div>
-    </div>
-  </div>
 
-  <!-- Projects -->
-  <div id="work" class="projects">
-    <div class="section-label">tuff work</div>
+    <div id="work" class="projects">
+      <div class="section-label">tuff work</div>
 
-    <div class="project">
-      <div class="video-wrap">
-        <div class="play-overlay" data-video="v1">
-          <div class="play-btn">
-            <svg viewBox="0 0 24 24" fill="var(--text)"><polygon points="5,3 19,12 5,21"/></svg>
+      <div class="project">
+        <div class="video-wrap">
+          <div class="play-overlay" data-video="v1">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="var(--text)"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
           </div>
+          <video id="v1" preload="auto" loop muted playsinline>
+            <source src="vid1.mp4" type="video/mp4">
+          </video>
         </div>
-        <video id="v1" preload="none" poster="">
-          <source src="vid1.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="proj-meta">
-        <div>
-          <div class="proj-title">Portal VFX Animation</div>
+        <div class="proj-meta">
+          <div>
+            <div class="proj-title">Portal VFX Animation</div>
           </div>
-        <span class="proj-tag">VFX</span>
+          <span class="proj-tag">VFX</span>
+        </div>
       </div>
-    </div>
 
-    <div class="project">
-      <div class="video-wrap">
-        <div class="play-overlay" data-video="v2">
-          <div class="play-btn">
-            <svg viewBox="0 0 24 24" fill="var(--text)"><polygon points="5,3 19,12 5,21"/></svg>
+      <div class="project">
+        <div class="video-wrap">
+          <div class="play-overlay" data-video="v2">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="var(--text)"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
           </div>
+          <video id="v2" preload="auto" loop muted playsinline>
+            <source src="vid2.mp4" type="video/mp4">
+          </video>
         </div>
-        <video id="v2" preload="none" poster="">
-          <source src="vid2.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="proj-meta">
-        <div>
-          <div class="proj-title">Knight in the Desert</div></p>
+        <div class="proj-meta">
+          <div>
+            <div class="proj-title">Knight in the Desert</div>
+          </div>
+          <span class="proj-tag">Character</span>
         </div>
-        <span class="proj-tag">Character</span>
       </div>
     </div>
-  </div>
 
-  <!-- Gallery -->
-  <div class="gallery-section">
-    <div class="section-label" style="padding: 0 40px; max-width:1040px; margin:0 auto;">Random stuff i made🥀</div>
-    <div class="gallery">
-      <div class="gallery-row r1">
-        <img src="AbandonedFoggyAlleyway.png" alt="Abandoned foggy alleyway">
-        <img src="AnimeBedroomInterior.png" alt="Anime bedroom interior">
-        <img src="BroOnCliff.jpg" alt="Figure on cliff">
-        <img src="broshim.jpg" alt="3D render">
-        <img src="CrystalFictionalCave.png" alt="Crystal cave">
-        <img src="AbandonedFoggyAlleyway.png" alt="">
-        <img src="AnimeBedroomInterior.png" alt="">
-        <img src="BroOnCliff.jpg" alt="">
-        <img src="broshim.jpg" alt="">
-        <img src="CrystalFictionalCave.png" alt="">
-      </div>
-      <div class="gallery-row r2">
-        <img src="DayGamingSetupMinimal.png" alt="Minimal gaming setup">
-        <img src="HouseInterior.png" alt="House interior">
-        <img src="MacroGrassShot.png" alt="Macro grass">
-        <img src="ProductBurberryPerfume.png" alt="Product render">
-        <img src="RuralHumidMountains.png" alt="Rural mountains">
-        <img src="DayGamingSetupMinimal.png" alt="">
-        <img src="HouseInterior.png" alt="">
-        <img src="MacroGrassShot.png" alt="">
-        <img src="ProductBurberryPerfume.png" alt="">
-        <img src="RuralHumidMountains.png" alt="">
+    <div class="gallery-section">
+      <div class="section-label" style="padding: 0 40px; max-width:1040px; margin:0 auto;">Random stuff i made🥀</div>
+      <div class="gallery">
+        <div class="gallery-row r1">
+          <img src="AbandonedFoggyAlleyway.png" alt="Abandoned foggy alleyway">
+          <img src="AnimeBedroomInterior.png" alt="Anime bedroom interior">
+          <img src="BroOnCliff.jpg" alt="Figure on cliff">
+          <img src="broshim.jpg" alt="3D render">
+          <img src="CrystalFictionalCave.png" alt="Crystal cave">
+          <img src="AbandonedFoggyAlleyway.png" alt="">
+          <img src="AnimeBedroomInterior.png" alt="">
+          <img src="BroOnCliff.jpg" alt="">
+          <img src="broshim.jpg" alt="">
+          <img src="CrystalFictionalCave.png" alt="">
+        </div>
+        <div class="gallery-row r2">
+          <img src="DayGamingSetupMinimal.png" alt="Minimal gaming setup">
+          <img src="HouseInterior.png" alt="House interior">
+          <img src="MacroGrassShot.png" alt="Macro grass">
+          <img src="ProductBurberryPerfume.png" alt="Product render">
+          <img src="RuralHumidMountains.png" alt="Rural mountains">
+          <img src="DayGamingSetupMinimal.png" alt="">
+          <img src="HouseInterior.png" alt="">
+          <img src="MacroGrassShot.png" alt="">
+          <img src="ProductBurberryPerfume.png" alt="">
+          <img src="RuralHumidMountains.png" alt="">
+        </div>
       </div>
     </div>
-  </div>
 
-<div id="process" class="timeline-outer">
-  <div class="section-label">The process</div>
-  <div class="timeline-scroll-container" id="tl-container">
-    <div class="timeline-sticky">
-      <div class="timeline-inner">
-        <div class="path-container">
-          <svg class="svg-path" viewBox="0 0 80 520" preserveAspectRatio="xMidYMid meet">
-            <path class="path-bg" d="M40 0 C40 80 10 120 40 180 C70 240 10 300 40 360 C70 420 40 480 40 520"/>
-            <path id="tl-progress" class="path-fill" d="M40 0 C40 80 10 120 40 180 C70 240 10 300 40 360 C70 420 40 480 40 520"/>
-            <circle id="tl-dot" class="timeline-dot" cx="40" cy="0"/>
-          </svg>
-        </div>
-        <div class="timeline-content">
-          <div class="stage-display" style="min-height: 220px;">
-            <div class="stage-item active" data-stage="0">
-              <div class="stage-num">01 — Concept</div>
-              <div class="stage-name">Idea</div>
-              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:20%"></div></div>
+    <div id="process" class="timeline-outer">
+      <div class="section-label">The process</div>
+      <div class="timeline-scroll-container" id="tl-container">
+        <div class="timeline-sticky">
+          <div class="timeline-inner">
+            <div class="path-container">
+              <svg class="svg-path" viewBox="0 0 80 520" preserveAspectRatio="xMidYMid meet">
+                <path class="path-bg" d="M40 0 C40 80 10 120 40 180 C70 240 10 300 40 360 C70 420 40 480 40 520"/>
+                <path id="tl-progress" class="path-fill" d="M40 0 C40 80 10 120 40 180 C70 240 10 300 40 360 C70 420 40 480 40 520"/>
+                <circle id="tl-dot" class="timeline-dot" cx="40" cy="0"/>
+              </svg>
             </div>
-            <div class="stage-item" data-stage="1">
-              <div class="stage-num">02 — Blockout</div>
-              <div class="stage-name">Form</div>
-              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:40%"></div></div>
-            </div>
-            <div class="stage-item" data-stage="2">
-              <div class="stage-num">03 — Modeling</div>
-              <div class="stage-name">Structure</div>
-              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:60%"></div></div>
-            </div>
-            <div class="stage-item" data-stage="3">
-              <div class="stage-num">04 — Texturing</div>
-              <div class="stage-name">Surface</div>
-              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:80%"></div></div>
-            </div>
-            <div class="stage-item" data-stage="4">
-              <div class="stage-num">05 — Render</div>
-              <div class="stage-name">Final</div>
-              <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:100%"></div></div>
+            <div class="timeline-content">
+              <div class="stage-display" style="min-height: 220px;">
+                <div class="stage-item active" data-stage="0">
+                  <div class="stage-num">01 — Concept</div>
+                  <div class="stage-name">Idea</div>
+                  <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:20%"></div></div>
+                </div>
+                <div class="stage-item" data-stage="1">
+                  <div class="stage-num">02 — Blockout</div>
+                  <div class="stage-name">Form</div>
+                  <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:40%"></div></div>
+                </div>
+                <div class="stage-item" data-stage="2">
+                  <div class="stage-num">03 — Modeling</div>
+                  <div class="stage-name">Structure</div>
+                  <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:60%"></div></div>
+                </div>
+                <div class="stage-item" data-stage="3">
+                  <div class="stage-num">04 — Texturing</div>
+                  <div class="stage-name">Surface</div>
+                  <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:80%"></div></div>
+                </div>
+                <div class="stage-item" data-stage="4">
+                  <div class="stage-num">05 — Render</div>
+                  <div class="stage-name">Final</div>
+                  <div class="stage-progress-bar"><div class="stage-progress-fill" style="width:100%"></div></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-logo">Website Built By Hassnain</div>
-    <div class="footer-copy">&copy; 2026 Blender Showcase</div>
-  </footer>
+    <footer>
+      <div class="footer-logo">Website Built By Hassnain</div>
+      <div class="footer-copy">&copy; 2026 Blender Showcase</div>
+    </footer>
+  </div>
 
   <script>
-    /* ── Play overlay ──────────────────────── */
-    document.querySelectorAll('.play-overlay').forEach(overlay => {
-      overlay.addEventListener('click', () => {
-        const vid = document.getElementById(overlay.dataset.video);
-        overlay.classList.add('hidden');
-        vid.setAttribute('controls', '');
-        vid.play().catch(() => {});
-      });
-    });
+    /* ── Asset Cache Preloader ──────────────── */
+    // Gather all uniquely targeted resources to download directly into memory blob caches
+    const assetsToLoad = [
+      { url: 'vid1.mp4', type: 'video', id: 'v1' },
+      { url: 'vid2.mp4', type: 'video', id: 'v2' },
+      { url: 'AbandonedFoggyAlleyway.png', type: 'image' },
+      { url: 'AnimeBedroomInterior.png', type: 'image' },
+      { url: 'BroOnCliff.jpg', type: 'image' },
+      { url: 'broshim.jpg', type: 'image' },
+      { url: 'CrystalFictionalCave.png', type: 'image' },
+      { url: 'DayGamingSetupMinimal.png', type: 'image' },
+      { url: 'HouseInterior.png', type: 'image' },
+      { url: 'MacroGrassShot.png', type: 'image' },
+      { url: 'ProductBurberryPerfume.png', type: 'image' },
+      { url: 'RuralHumidMountains.png', type: 'image' }
+    ];
 
-    /* ── Scroll-reveal for projects ────────── */
-    const revealObs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.project').forEach(el => revealObs.observe(el));
+    let loadedCount = 0;
+    const totalAssets = assetsToLoad.length;
 
-    /* ── Stat counter animation ────────────── */
-    function animateCount(el, target) {
-      const dur = 1400; const start = performance.now();
-      const suffix = el.dataset.suffix || '';
-      requestAnimationFrame(function tick(now) {
-        const t = Math.min((now - start) / dur, 1);
-        const eased = 1 - Math.pow(1 - t, 3);
-        el.textContent = Math.round(eased * target) + suffix;
-        if (t < 1) requestAnimationFrame(tick);
-      });
-    }
-    const statsObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.querySelectorAll('[data-count]').forEach(el => {
-            animateCount(el, parseInt(el.dataset.count));
-          });
-          statsObs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.4 });
-    const statsEl = document.querySelector('.stats');
-    if (statsEl) statsObs.observe(statsEl);
+    function updateLoaderProgress() {
+      loadedCount++;
+      const pct = Math.round((loadedCount / totalAssets) * 100);
+      document.getElementById('loader-bar').style.width = pct + '%';
+      document.getElementById('loader-text').textContent = pct + '%';
 
-    /* ── Timeline scroll ───────────────────── */
-    const tlProgress = document.getElementById('tl-progress');
-    const tlDot = document.getElementById('tl-dot');
-    const tlContainer = document.getElementById('tl-container');
-    const stages = document.querySelectorAll('.stage-item');
-
-    if (tlProgress && tlContainer) {
-      const pathLen = tlProgress.getTotalLength();
-      tlProgress.style.strokeDasharray = pathLen;
-      tlProgress.style.strokeDashoffset = pathLen;
-
-      function updateTimeline() {
-        const rect = tlContainer.getBoundingClientRect();
-        const totalScroll = tlContainer.offsetHeight - window.innerHeight;
-        const scrolled = -rect.top;
-        const pct = Math.max(0, Math.min(1, scrolled / totalScroll));
-
-        const draw = pct * pathLen;
-        tlProgress.style.strokeDashoffset = pathLen - draw;
-
-        const point = tlProgress.getPointAtLength(draw);
-        tlDot.setAttribute('cx', point.x);
-        tlDot.setAttribute('cy', point.y);
-
-        const stageIdx = Math.min(Math.floor(pct * 5), 4);
-        stages.forEach((s, i) => s.classList.toggle('active', i === stageIdx));
+      if (loadedCount === totalAssets) {
+        setTimeout(initWebsite, 400); // Small visual buffer for polish
       }
+    }
 
-      window.addEventListener('scroll', updateTimeline, { passive: true });
-      updateTimeline();
+    function initWebsite() {
+      const loader = document.getElementById('loader');
+      loader.style.opacity = '0';
+      loader.style.transform = 'scale(1.02)';
+      document.body.classList.add('loaded');
+      
+      setTimeout(() => {
+        loader.style.display = 'none';
+        // Initialize dynamic viewport tracking scroll logic after layout stabilizes
+        runScrollInits();
+      }, 600);
+    }
+
+    // Load assets asynchronously through AJAX fetch pipelines
+    if (totalAssets > 0) {
+      assetsToLoad.forEach(asset => {
+        fetch(asset.url)
+          .then(res => {
+            if(!res.ok) throw new Error();
+            return res.blob();
+          })
+          .then(blob => {
+            const blobUrl = URL.createObjectURL(blob);
+            
+            if (asset.type === 'video') {
+              // Inject object cache URL straight into DOM media elements
+              const videoEl = document.getElementById(asset.id);
+              if (videoEl) {
+                const source = videoEl.querySelector('source');
+                if (source) source.src = blobUrl;
+                videoEl.load();
+              }
+            } else if (asset.type === 'image') {
+              // Swap matching file names in all image nodes with local blobs
+              document.querySelectorAll(`img[src="${asset.url}"]`).forEach(img => {
+                img.src = blobUrl;
+              });
+            }
+            updateLoaderProgress();
+          })
+          .catch(() => {
+            // Fallback gracefully on local file server environments or errors to avoid lockouts
+            updateLoaderProgress();
+          });
+      });
+    } else {
+      initWebsite();
+    }
+
+    /* ── Core Site Functionality (Runs Post-Load) ── */
+    function runScrollInits() {
+      /* ── Play overlay ──────────────────────── */
+      document.querySelectorAll('.play-overlay').forEach(overlay => {
+        overlay.addEventListener('click', () => {
+          const vid = document.getElementById(overlay.dataset.video);
+          overlay.classList.add('hidden');
+          vid.setAttribute('controls', '');
+          vid.play().catch(() => {});
+        });
+      });
+
+      /* ── Scroll-reveal for projects ────────── */
+      const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.project').forEach(el => revealObs.observe(el));
+
+      /* ── Stat counter animation ────────────── */
+      function animateCount(el, target) {
+        const dur = 1400; const start = performance.now();
+        const suffix = el.dataset.suffix || '';
+        requestAnimationFrame(function tick(now) {
+          const t = Math.min((now - start) / dur, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(eased * target) + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+        });
+      }
+      const statsObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.querySelectorAll('[data-count]').forEach(el => {
+              animateCount(el, parseInt(el.dataset.count));
+            });
+            statsObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      const statsEl = document.querySelector('.stats');
+      if (statsEl) statsObs.observe(statsEl);
+
+      /* ── Timeline scroll ───────────────────── */
+      const tlProgress = document.getElementById('tl-progress');
+      const tlDot = document.getElementById('tl-dot');
+      const tlContainer = document.getElementById('tl-container');
+      const stages = document.querySelectorAll('.stage-item');
+
+      if (tlProgress && tlContainer) {
+        const pathLen = tlProgress.getTotalLength();
+        tlProgress.style.strokeDasharray = pathLen;
+        tlProgress.style.strokeDashoffset = pathLen;
+
+        function updateTimeline() {
+          const rect = tlContainer.getBoundingClientRect();
+          const totalScroll = tlContainer.offsetHeight - window.innerHeight;
+          const scrolled = -rect.top;
+          const pct = Math.max(0, Math.min(1, scrolled / totalScroll));
+
+          const draw = pct * pathLen;
+          tlProgress.style.strokeDashoffset = pathLen - draw;
+
+          const point = tlProgress.getPointAtLength(draw);
+          tlDot.setAttribute('cx', point.x);
+          tlDot.setAttribute('cy', point.y);
+
+          const stageIdx = Math.min(Math.floor(pct * 5), 4);
+          stages.forEach((s, i) => s.classList.toggle('active', i === stageIdx));
+        }
+
+        window.addEventListener('scroll', updateTimeline, { passive: true });
+        updateTimeline();
+      }
     }
   </script>
 </body>
